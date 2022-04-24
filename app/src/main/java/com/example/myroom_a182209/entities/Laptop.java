@@ -19,6 +19,15 @@ public class Laptop {
     @ColumnInfo(name = "laptop_price")
     float laptopPrice;
 
+    public Laptop(@NonNull int laptopID) {
+        this.laptopID = laptopID;
+    }
+
+    public Laptop(@NonNull String laptopBrand, @NonNull float laptopPrice) {
+        this.laptopBrand = laptopBrand;
+        this.laptopPrice = laptopPrice;
+    }
+
     public Laptop(int laptopID, @NonNull String laptopBrand, float laptopPrice) {
         this.laptopID = laptopID;
         this.laptopBrand = laptopBrand;
@@ -32,7 +41,7 @@ public class Laptop {
         return laptopID;
     }
 
-    public void setLaptopID(int laptopID) {
+    public void setLaptopID(@NonNull int laptopID) {
         this.laptopID = laptopID;
     }
 
@@ -49,7 +58,7 @@ public class Laptop {
         return laptopPrice;
     }
 
-    public void setLaptopPrice(float laptopPrice) {
+    public void setLaptopPrice(@NonNull float laptopPrice) {
         this.laptopPrice = laptopPrice;
     }
 }
