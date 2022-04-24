@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.myroom_a182209.entities.Laptop;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     Button btnSave,btnUpdate;
@@ -96,9 +97,32 @@ public class MainActivity extends AppCompatActivity {
 
     public void getAllLaptop(){
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<Laptop> laptops = myLaptopDB.laptopDao().getAllLaptop();
+                String laptopInfo;
+                for(Laptop laptop:laptops){
+                    laptopInfo="ID: "+laptop.getLaptopID()+
+                            "\n Brand: "+ laptop.getLaptopBrand()+
+                            "\n Price(RM): "+ laptop.getLaptopPrice();
+                    laptopArray.add(laptopInfo);
+                    laptopID.add(laptop.getLaptopID());
+                }
+                showDataInListView();
+            }
+        }).start();
+
     }
 
     public void showDataInListView(){
+        MainActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                laptopListAdapter.addAll(laptopArray);
+                lvLaptop.setAdapter(laptopListAdapter);
+            }
+        });
 
     }
 
@@ -126,4 +150,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getAllLaptop();
+    }
 }
